@@ -1,0 +1,7 @@
+config BR2_PACKAGE_NONLINEAR_ALL
+       bool "nonlinear_all"
+       help
+         meta project for rebuilding all software modules maintained by nonlinear labs team
+	 
+	 http://www.nonlinear-labs.de
+

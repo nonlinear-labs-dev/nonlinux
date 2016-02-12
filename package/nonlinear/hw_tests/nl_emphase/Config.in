@@ -1,0 +1,7 @@
+config BR2_PACKAGE_HWTESTS_NL_EMPHASE
+       bool "nl_emphase"
+       help
+         Old hardwaretests might be usefull sometimes
+	 
+	 http://www.nonlinearlabs.de
+

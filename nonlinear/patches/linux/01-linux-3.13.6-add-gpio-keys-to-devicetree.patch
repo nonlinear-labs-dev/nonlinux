@@ -1,0 +1,18 @@
+--- linux-3.13.6/arch/arm/boot/dts/am335x-bone-common.dtsi	2014-03-07 07:07:02.000000000 +0100
++++ linux-3.13.6/arch/arm/boot/dts/am335x-bone-common.dtsi	2014-03-25 16:00:40.064076272 +0100
+@@ -21,6 +21,15 @@
+ 		reg = <0x80000000 0x10000000>; /* 256 MB */
+ 	};
+ 
++	gpio-keys {
++		compatible = "gpio-keys";
++		sw_reset_button {
++		    label = "Soft Reset";
++		    gpios = <&gpio1 16 0>;
++		    linux,code = <1>; 
++		};
++	};
++
+ 	leds {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&user_leds_s0>;

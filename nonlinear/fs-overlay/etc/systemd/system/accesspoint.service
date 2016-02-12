@@ -1,0 +1,9 @@
+[Unit]
+Description=AccessPoint daemon
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/sbin/hostapd /etc/hostapd.conf
+
+[Install]
+WantedBy=multi-user.target

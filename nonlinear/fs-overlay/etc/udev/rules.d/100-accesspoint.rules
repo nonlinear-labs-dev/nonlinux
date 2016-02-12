@@ -1,0 +1,2 @@
+SUBSYSTEM=="net",ACTION=="add",KERNEL=="wlan0",RUN+="/sbin/ifconfig wlan0 192.168.8.2 netmask 255.255.255.224",RUN+="/bin/systemctl start accesspoint.service",RUN+="/bin/systemctl start dhcpd-wlan.service"
+SUBSYSTEM=="net",ACTION=="remove",KERNEL=="wlan0",RUN+="/bin/systemctl stop accesspoint.service",RUN+="/bin/systemctl stop dhcpd-wlan.service"

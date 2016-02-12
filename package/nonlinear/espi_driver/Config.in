@@ -1,0 +1,7 @@
+config BR2_PACKAGE_ESPI_DRIVER
+       bool "espi_driver"
+       depends on BR2_LINUX_KERNEL
+       help
+         NonlinearLabs kernel module for espi hub
+	 
+	 http://www.nonlinearlabs.de

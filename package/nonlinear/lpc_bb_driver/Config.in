@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LPC_BB_DRIVER
+       bool "lpc_bb_driver"
+       depends on BR2_LINUX_KERNEL
+       help
+         NonlinearLabs kernel module for communication with lpc
+	 
+	 http://www.nonlinearlabs.de

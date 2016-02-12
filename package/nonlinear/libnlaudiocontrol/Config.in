@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LIBNLAUDIOCONTROL
+       bool "libnlaudiocontrol"
+       help
+         NonlinearLabs library for communication between BB to LPC
+	 
+	 http://www.nonlinearlabs.de
+

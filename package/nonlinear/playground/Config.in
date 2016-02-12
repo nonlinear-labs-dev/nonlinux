@@ -1,0 +1,7 @@
+config BR2_PACKAGE_PLAYGROUND
+       bool "playground"
+       help
+         the NonlinearLabs playground project
+	 
+	 http://www.nonlinear-labs.de
+

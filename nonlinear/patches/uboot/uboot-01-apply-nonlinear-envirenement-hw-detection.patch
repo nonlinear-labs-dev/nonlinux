@@ -1,0 +1,177 @@
+From 338588539389d5e9e990d851f7c3f6eda59ae0e3 Mon Sep 17 00:00:00 2001
+From: Pascal Huerst <pascal.huerst@gmail.com>
+Date: Fri, 5 Sep 2014 16:55:38 +0200
+Subject: [PATCH 1/1] Added nonlinear HW-version code
+
+Signed-off-by: Pascal Huerst <pascal.huerst@gmail.com>
+---
+ include/configs/am335x_evm.h | 143 ++++++++++++-------------------------------
+ 1 file changed, 38 insertions(+), 105 deletions(-)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 73a9adb..5ea115d 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -54,121 +54,54 @@
+ 
+ #ifndef CONFIG_SPL_BUILD
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+-	"loadaddr=0x80200000\0" \
+-	"fdtaddr=0x80F80000\0" \
+-	"fdt_high=0xffffffff\0" \
+-	"boot_fdt=try\0" \
+-	"rdaddr=0x81000000\0" \
++	"findbootdev=mmc dev 0; if mmc rescan; then echo Booting from Micro SD Card; setenv mmcdev 0; else echo Booting from eMMC; setenv mmcdev 1; fi; setenv bootpart ${mmcdev}:2; mmc dev ${mmcdev};\0" \
++	"mmcdev=0\0" \
+ 	"bootpart=0:2\0" \
++	"kloadaddr=0x80007fc0\0" \
+ 	"bootdir=/boot\0" \
+-	"bootfile=zImage\0" \
+-	"fdtfile=undefined\0" \
++	"bootfile=uImage\0" \
++	"loadkernel=load mmc ${bootpart} ${kloadaddr} ${bootdir}/${bootfile}\0" \
++	"fdtaddr=0x80F80000\0" \
++	"fdtfile=\0" \
++	"loaddt=load mmc ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}\0" \
+ 	"console=ttyO0,115200n8\0" \
+-	"optargs=\0" \
+-	"mmcdev=0\0" \
+ 	"mmcroot=/dev/mmcblk0p2 ro\0" \
+ 	"mmcrootfstype=ext4 rootwait\0" \
+-	"rootpath=/export/rootfs\0" \
+-	"nfsopts=nolock\0" \
+-	"static_ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}" \
+-		"::off\0" \
+-	"ramroot=/dev/ram0 rw ramdisk_size=65536 initrd=${rdaddr},64M\0" \
+-	"ramrootfstype=ext2\0" \
+-	"mmcargs=setenv bootargs console=${console} " \
+-		"${optargs} " \
+-		"root=${mmcroot} " \
+-		"rootfstype=${mmcrootfstype}\0" \
+-	"spiroot=/dev/mtdblock4 rw\0" \
+-	"spirootfstype=jffs2\0" \
+-	"spisrcaddr=0xe0000\0" \
+-	"spiimgsize=0x362000\0" \
+-	"spibusno=0\0" \
+-	"spiargs=setenv bootargs console=${console} " \
+-		"${optargs} " \
+-		"root=${spiroot} " \
+-		"rootfstype=${spirootfstype}\0" \
+-	"netargs=setenv bootargs console=${console} " \
+-		"${optargs} " \
+-		"root=/dev/nfs " \
+-		"nfsroot=${serverip}:${rootpath},${nfsopts} rw " \
+-		"ip=dhcp\0" \
+-	"bootenv=uEnv.txt\0" \
+-	"loadbootenv=load mmc ${mmcdev} ${loadaddr} ${bootenv}\0" \
+-	"importbootenv=echo Importing environment from mmc ...; " \
+-		"env import -t $loadaddr $filesize\0" \
+-	"ramargs=setenv bootargs console=${console} " \
+-		"${optargs} " \
+-		"root=${ramroot} " \
+-		"rootfstype=${ramrootfstype}\0" \
+-	"loadramdisk=load mmc ${mmcdev} ${rdaddr} ramdisk.gz\0" \
+-	"loadimage=load mmc ${bootpart} ${loadaddr} ${bootdir}/${bootfile}\0" \
+-	"loadfdt=load mmc ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}\0" \
+-	"mmcloados=run mmcargs; " \
+-		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
+-			"if run loadfdt; then " \
+-				"bootz ${loadaddr} - ${fdtaddr}; " \
+-			"else " \
+-				"if test ${boot_fdt} = try; then " \
+-					"bootz; " \
+-				"else " \
+-					"echo WARN: Cannot load the DT; " \
+-				"fi; " \
+-			"fi; " \
+-		"else " \
+-			"bootz; " \
+-		"fi;\0" \
+-	"mmcboot=mmc dev ${mmcdev}; " \
+-		"if mmc rescan; then " \
+-			"echo SD/MMC found on device ${mmcdev};" \
+-			"if run loadbootenv; then " \
+-				"echo Loaded environment from ${bootenv};" \
+-				"run importbootenv;" \
+-			"fi;" \
+-			"if test -n $uenvcmd; then " \
+-				"echo Running uenvcmd ...;" \
+-				"run uenvcmd;" \
+-			"fi;" \
+-			"if run loadimage; then " \
+-				"run mmcloados;" \
+-			"fi;" \
+-		"fi;\0" \
+-	"spiboot=echo Booting from spi ...; " \
+-		"run spiargs; " \
+-		"sf probe ${spibusno}:0; " \
+-		"sf read ${loadaddr} ${spisrcaddr} ${spiimgsize}; " \
+-		"bootz ${loadaddr}\0" \
+-	"netboot=echo Booting from network ...; " \
+-		"setenv autoload no; " \
+-		"dhcp; " \
+-		"tftp ${loadaddr} ${bootfile}; " \
+-		"tftp ${fdtaddr} ${fdtfile}; " \
+-		"run netargs; " \
+-		"bootz ${loadaddr} - ${fdtaddr}\0" \
+-	"ramboot=echo Booting from ramdisk ...; " \
+-		"run ramargs; " \
+-		"bootz ${loadaddr} ${rdaddr} ${fdtaddr}\0" \
+-	"findfdt="\
+-		"if test $board_name = A335BONE; then " \
+-			"setenv fdtfile am335x-bone.dtb; fi; " \
+-		"if test $board_name = A335BNLT; then " \
+-			"setenv fdtfile am335x-boneblack.dtb; fi; " \
+-		"if test $board_name = A33515BB; then " \
+-			"setenv fdtfile am335x-evm.dtb; fi; " \
+-		"if test $board_name = A335X_SK; then " \
+-			"setenv fdtfile am335x-evmsk.dtb; fi; " \
+-		"if test $fdtfile = undefined; then " \
+-			"echo WARNING: Could not determine device tree to use; fi; \0" \
++	"mmcbootargs=setenv bootargs console=${console} ${optargs} root=${mmcroot} rootfstype=${mmcrootfstype}\0" \
++	"nonboot=bootm ${kloadaddr} - ${fdtaddr}\0" \
++	"findhwref=gpio input 46; if test $? -eq 1; then setenv hwsel1 1; else setenv hwsel1 0; fi; \
++gpio input 27; if test $? -eq 1; then setenv hwsel2 1; else setenv hwsel2 0; fi; \
++gpio input 65; if test $? -eq 1; then setenv hwsel3 1; else setenv hwsel3 0; fi; \
++gpio input 22; if test $? -eq 1; then setenv hwsel4 1; else setenv hwsel4 0; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 0 && itest ${hwsel3} == 0 && itest ${hwsel3} == 0; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 0 && itest ${hwsel3} == 0 && itest ${hwsel3} == 0; then setenv hw_ref 2A; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 1 && itest ${hwsel3} == 0 && itest ${hwsel3} == 0; then setenv hw_ref 2B; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 1 && itest ${hwsel3} == 0 && itest ${hwsel3} == 0; then setenv hw_ref 2C; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 0 && itest ${hwsel3} == 1 && itest ${hwsel3} == 0; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 0 && itest ${hwsel3} == 1 && itest ${hwsel3} == 0; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 1 && itest ${hwsel3} == 1 && itest ${hwsel3} == 0; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 1 && itest ${hwsel3} == 1 && itest ${hwsel3} == 0; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 0 && itest ${hwsel3} == 0 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 0 && itest ${hwsel3} == 0 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 1 && itest ${hwsel3} == 0 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 1 && itest ${hwsel3} == 0 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 0 && itest ${hwsel3} == 1 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 0 && itest ${hwsel3} == 1 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 0 && itest ${hwsel2} == 1 && itest ${hwsel3} == 1 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++if itest ${hwsel1} == 1 && itest ${hwsel2} == 1 && itest ${hwsel3} == 1 && itest ${hwsel3} == 1; then setenv hw_ref not_found; fi; \
++setenv fdtfile nonlinear-labs-${hw_ref}.dtb; \
++echo \"Using dt-file: ${fdtfile}\";" \
+ 	NANDARGS \
+ 	DFUARGS
+ #endif
+ 
+ #define CONFIG_BOOTCOMMAND \
+-	"run findfdt; " \
+-	"run mmcboot;" \
+-	"setenv mmcdev 1; " \
+-	"setenv bootpart 1:2; " \
+-	"run mmcboot;" \
+-	"run nandboot;"
++	"run findbootdev;" \
++	"run loadkernel;" \
++	"run mmcbootargs;" \
++        "run findhwref;" \
++	"run loaddt;" \
++	"run nonboot;"
+ 
+ /* NS16550 Configuration */
+ #define CONFIG_SYS_NS16550_COM1		0x44e09000	/* Base EVM has UART0 */
+-- 
+1.9.3
+
