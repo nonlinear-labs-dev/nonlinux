@@ -1,0 +1,9 @@
+[Unit]
+Description=Nonlinear-Labs Playground
+After=syslog.target network.target
+
+[Service]
+ExecStart=/nonlinear/playground/playground
+
+[Install]
+WantedBy=multi-user.target

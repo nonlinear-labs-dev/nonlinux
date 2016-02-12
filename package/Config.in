@@ -2010,4 +2010,22 @@ menu "Text editors and viewers"
 	source "package/vim/Config.in"
 endmenu
 
+menu "Nonlinear Labs"
+source "package/nonlinear/playground/Config.in"
+source "package/nonlinear/libnlaudiocontrol/Config.in"
+source "package/nonlinear/libnlemphase/Config.in"
+source "package/nonlinear/espi_driver/Config.in"
+source "package/nonlinear/lpc_bb_driver/Config.in"
+source "package/nonlinear/libnlfonts/Config.in"
+source "package/nonlinear/nonlinear_all/Config.in"
+endmenu
+
+menu "Hardware Tests"
+#source "package/nonlinear/hw_tests/scsx/Config.in"
+#source "package/nonlinear/hw_tests/nl_emphase/Config.in"
+source "package/nonlinear/testrunner/Config.in"
+source "package/nonlinear/libtests/Config.in"
+endmenu
+
+
 endmenu

@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LIBNLEMPHASE
+       bool "libnlemphase"
+       help
+         NonlinearLabs library for supporting nl displays
+	 
+	 http://www.nonlinearlabs.de
+
