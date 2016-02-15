@@ -3,6 +3,7 @@
 MOUNT_POINT_ROOT=/tmp/root
 MOUNT_POINT_BOOT=/tmp/boot
 IMAGE_VERSION_INFO_FILE=${MOUNT_POINT_ROOT}/etc/nonlinear_release
+SFDISK="output/host/usr/sbin/sfdisk"
 
 function usage {
 	printf "Usage:\n\n"
@@ -55,7 +56,7 @@ printf "Flushing old partition table...\n"
 dd if=/dev/zero of=$DEVICE bs=1024 count=1024 2>/dev/null 1>/dev/null && sync
 
 printf "Creating new partition table...\n"
-echo -e ',50M,c,*\n,\n' | sudo sfdisk $DEVICE 2>/dev/null 1>/dev/null && sync
+echo -e ',50M,c,*\n,\n' | sudo $SFDISK $DEVICE 2>/dev/null 1>/dev/null && sync
 
 printf "Creating Partitions...\n"
 mkfs.vfat -n BOOT ${DEVICE}1 1>/dev/null 2>/dev/null
