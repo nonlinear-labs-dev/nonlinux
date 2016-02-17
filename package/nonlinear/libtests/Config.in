@@ -1,9 +1,0 @@
-config BR2_PACKAGE_LIBTESTS
-	bool "libtests"
-	#depends on LIBNLEMPHASE
-	#depends on LIBNLAUDIOCONTROL	
-	help
-	  NonlinearLabs libtests, to test nonlinear labs libraries,
-	  such as libnlemphase and libnlaudiocontrol
-
-	  http://www.nonlinearlabs.de

@@ -1,9 +1,0 @@
-config BR2_PACKAGE_LIBNLFONTS
-	bool "libnlfonts"
-	depends on BR2_PACKAGE_FONTBUILDER 
-	help
-	  Installs libnlfonts.so with all generated fonts from the bmps in font repository
-
-	  http//www.nonlinear-labs.de
-
-
