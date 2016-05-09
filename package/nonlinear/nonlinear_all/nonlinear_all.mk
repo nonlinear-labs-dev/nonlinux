@@ -11,7 +11,7 @@ NONLINEAR_ALL_SITE_METHOD = file
 NONLINEAR_ALL_LICENSE = GPLv3+
 NONLINEAR_ALL_LICENSE_FILES = COPYING
 
-PACKAGES_TO_CARE_FOR = libnlemphase libnlfonts libnlaudiocontrol lpc_bb_driver espi_driver playground
+PACKAGES_TO_CARE_FOR = libnlemphase libnlfonts lpc_bb_driver espi_driver playground
 
 define NONLINEAR_ALL_EXTRACT_CMDS
 endef
