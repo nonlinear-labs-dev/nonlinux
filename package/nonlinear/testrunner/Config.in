@@ -1,7 +1,0 @@
-config BR2_PACKAGE_TESTRUNNER
-       bool "testrunner"
-       depends on BR2_LINUX_KERNEL
-       help
-         NonlinearLabs testrunner, to test hw pins and device files
-	 
-	 http://www.nonlinearlabs.de

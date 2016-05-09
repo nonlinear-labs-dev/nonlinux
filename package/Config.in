@@ -2020,7 +2020,6 @@ endmenu
 menu "Hardware Tests"
 #source "package/nonlinear/hw_tests/scsx/Config.in"
 #source "package/nonlinear/hw_tests/nl_emphase/Config.in"
-source "package/nonlinear/testrunner/Config.in"
 endmenu
 
 
