@@ -103,7 +103,7 @@ printf "Mounting at rootfs at $MOUNT_POINT_ROOT\n"
 mkdir -p ${MOUNT_POINT_ROOT}
 mount ${DEVICE_P2} ${MOUNT_POINT_ROOT}
 printf "Copy rootfs to target...\n"
-pv output/images/rootfs.tar | tar -C ${MOUNT_POINT_ROOT} -xf && sync
+tar -C ${MOUNT_POINT_ROOT} -xf output/images/rootfs.tar && sync
 printf "Updating build information in target fs...\n"
 printf "Unmounting rootfs...\n"
 umount ${MOUNT_POINT_ROOT}
