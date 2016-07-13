@@ -9,11 +9,11 @@ INCLUDE_DTSI=$(readlink -f $KERNEL_PATH/arch/arm/boot/dts)
 DTC="$1/../../output/host/usr/bin/dtc"
 CPP="$1/../../output/host/usr/bin/arm-linux-cpp"
 
-[ -f $DTC ] && echo "Found Dtc Compiler..." || (echo "Error: DTC Compiler not Installed!" && exit -1)
+[ -f $DTC ] && echo "  Found Dtc Compiler..." || (echo "  Error: DTC Compiler not Installed!" && exit -1)
 
 for f in $1/../../nonlinear/devicetree/nonlinear-labs-*.dts
 do
-	echo "Processing $f"
+	echo "  Processing $f"
 	FILENAME=$(basename "$f")
 	EXTENSION="${FILENAME##*.}"
 	FILENAME="${FILENAME%.*}"
@@ -27,7 +27,7 @@ do
 	eval $DTC -i $INCLUDE_DTSI -I dts -b 0 -O dtb -o $OUTPATH/$FILENAME.dtb tmp.dtc && rm tmp.dtc
 done
 
-echo "Build compatibility File: am335x-boneblack.dtb"
+echo "  Build compatibility File: am335x-boneblack.dtb"
 cp $OUTPATH/$FILENAME.dtb $OUTPATH/am335x-boneblack.dtb
 
 
