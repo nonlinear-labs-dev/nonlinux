@@ -19,17 +19,17 @@
 				gpios = <&gpio2 2 GPIO_ACTIVE_HIGH>;
 			};
 			led@6 {
-				label = "espi_driver_status";	
+				label = "espi_driver_status";
 				gpios = <&gpio2 5 GPIO_ACTIVE_HIGH>;
 				default-state = "off";
 			};
 			led@8 {
-				label = "nlaudiocontrol_status";	
+				label = "nlaudiocontrol_status";
 				gpios = <&gpio2 4 GPIO_ACTIVE_HIGH>;
 				default-state = "off";
 			};
 			led@7 {
-				label = "playground_status";	
+				label = "playground_status";
 				gpios = <&gpio2 3 GPIO_ACTIVE_HIGH>;
 				default-state = "off";
 			};
@@ -37,7 +37,7 @@
 		nonlinear {
 			hw-rev = "2D";
 		};
-		
+
 	};
 
 	&ldo3_reg {
@@ -50,13 +50,24 @@
 	vmmc-supply = <&vmmcsd_fixed>;
 	};
 
+	&mmc2 {
+	vmmc-supply = <&vmmcsd_fixed>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "okay";
+	ti,vcc-aux-disable-is-sleep;
+	};
+
+
+
 	&am33xx_pinmux {
 	pinctrl-0 = <&pinctrl_lpc_bb_sp1>;
-	
+
 	pinctrl_lpc_bb_sp1: pinmux_lpc_bb_sp1_pin {
 		pinctrl-single,pins = < 0x1B4 0x7 >;
 	};
-	
+
 	/*NL_nni: SPI1 (ADC) & SPI0 added */
 	pinctrl_spi0: pinmux_spi0_pins {
 		pinctrl-single,pins = <
@@ -128,7 +139,7 @@
 		compatible ="espi_driver", "spidev";
 		reg = <0>;
 		prop1="Wert von Prop1";
-		prop2=<12345>;		
+		prop2=<12345>;
 
 		spi-max-frequency=<24000000>;
 		/* NL_nni: eSPI hub specific GPIOs */
