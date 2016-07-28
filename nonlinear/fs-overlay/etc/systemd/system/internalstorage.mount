@@ -1,0 +1,10 @@
+[Unit]
+Description = internal storage
+
+[Mount]
+What = /dev/mmcblk1p2
+Where = /internalstorage
+Type = ext4
+
+[Install]
+WantedBy = multi-user.target
