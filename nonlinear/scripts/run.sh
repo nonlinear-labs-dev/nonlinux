@@ -19,6 +19,6 @@ do
 	if [[ $rc != 0 ]] ; then
     		exit $rc
 	fi
-	echo -e "${red}[Done]${nocolor}" $each
+	echo -e "${red}[Done   ]${nocolor}" $each
 done ;
 
