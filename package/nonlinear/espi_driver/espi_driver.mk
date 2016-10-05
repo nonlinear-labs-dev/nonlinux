@@ -6,7 +6,7 @@
 
 ESPI_DRIVER_MODULE = espi_driver
 ESPI_DRIVER_INSTALL_STAGING = YES
-ESPI_DRIVER_VERSION = HEAD
+ESPI_DRIVER_VERSION = master
 ESPI_DRIVER_SITE = git@nonlinear-labs.git.beanstalkapp.com:/nonlinear-labs/espi_driver.git
 ESPI_DRIVER_SITE_METHOD = git
 ESPI_DRIVER_DEPENDENCIES = linux
