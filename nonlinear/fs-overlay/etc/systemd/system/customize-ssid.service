@@ -1,9 +1,0 @@
-[Unit]
-Description=Customize SSID
-After=syslog.target network.target
-
-[Service]
-ExecStart=/usr/bin/customize_ssid.sh /etc/hostapd.conf
-
-[Install]
-WantedBy=multi-user.target
