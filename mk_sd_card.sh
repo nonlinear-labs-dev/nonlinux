@@ -105,6 +105,7 @@ mount ${DEVICE_P2} ${MOUNT_POINT_ROOT}
 printf "Copy rootfs to target...\n"
 tar -C ${MOUNT_POINT_ROOT} -xf output/images/rootfs.tar && sync
 printf "Updating build information in target fs...\n"
+write_release_file
 printf "Unmounting rootfs...\n"
 umount ${MOUNT_POINT_ROOT}
 
