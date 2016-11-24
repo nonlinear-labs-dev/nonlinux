@@ -115,7 +115,7 @@ mount ${DEVICE_P1} ${MOUNT_POINT_BOOT}
 cp -v output/images/u-boot.img ${MOUNT_POINT_BOOT} && sync
 cp -v output/images/MLO ${MOUNT_POINT_BOOT} && sync
 printf "Creating uEnv.txt...\n"
-echo "uenvcmd=load mmc 0:2 \${loadaddr} boot/uImage; load mmc 0:2 \${fdtaddr} boot/nonlinear-labs-2D.dtb; run mmcargs; bootm \${loadaddr} - \${fdtaddr}" > ${MOUNT_POINT_BOOT}/uEnv.txt
+echo "uenvcmd=setenv fdtaddr 0x82000000; load mmc 0:2 \${loadaddr} boot/uImage; load mmc 0:2 \${fdtaddr} boot/nonlinear-labs-2D.dtb; run mmcargs; bootm \${loadaddr} - \${fdtaddr}" > ${MOUNT_POINT_BOOT}/uEnv.txt
 printf "Unmounting boot...\n"
 umount ${MOUNT_POINT_BOOT}
 
