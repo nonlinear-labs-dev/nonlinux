@@ -275,12 +275,17 @@ if [ ${OPT_COPY_BOOTFS} = true ]; then
 	sync_bootfs && write_uenv_file && sync
 fi
 
-if ! [ ${OPT_WIFI_NAME} = "" ]; then
+if [[ ! -z ${OPT_WIFI_NAME} ]]; then
 	set_ssid && sync
 fi
 
-if ! [ ${OPT_WIFI_PW} = "" ]; then
+if [[ ! -z ${OPT_WIFI_PW} ]]; then
 	set_password && sync
+fi
+
+if [ ${OPT_CREATE_INSTALL_MEDIA} = true ]; then
+	printf "Copy install data to target...\n"
+	cp output/images/rootfs.tar ${MOUNT_POINT_ROOT}/rootfs.tar && sync
 fi
 
 
