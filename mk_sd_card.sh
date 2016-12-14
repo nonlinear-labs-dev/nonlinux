@@ -39,6 +39,7 @@ function write_release_file {
 function write_uenv_file {
 	printf "Creating uEnv.txt...\n"
 	MMC_CMDS="uenvcmd=mmc rescan"
+	MMC_CMDS="${MMC_CMDS}; setenv fdtaddr 0x88000000"
 	MMC_CMDS="${MMC_CMDS}; load mmc 0:2 \${loadaddr} boot/uImage"
 	MMC_CMDS="${MMC_CMDS}; load mmc 0:2 \${fdtaddr} boot/nonlinear-labs-2D.dtb"
 	MMC_CMDS="${MMC_CMDS}; setenv mmcroot /dev/mmcblk0p2 ro"
