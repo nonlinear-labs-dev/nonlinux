@@ -38,7 +38,14 @@ function write_release_file {
 
 function write_uenv_file {
 	printf "Creating uEnv.txt...\n"
-	echo "uenvcmd=setenv fdtaddr 0x82000000; load mmc 0:2 \${loadaddr} boot/uImage; load mmc 0:2 \${fdtaddr} boot/nonlinear-labs-2D.dtb; run mmcargs; bootm \${loadaddr} - \${fdtaddr}" > ${MOUNT_POINT_BOOT}/uEnv.txt
+	MMC_CMDS="uenvcmd=mmc rescan"
+	MMC_CMDS="${MMC_CMDS}; load mmc 0:2 \${loadaddr} boot/uImage"
+	MMC_CMDS="${MMC_CMDS}; load mmc 0:2 \${fdtaddr} boot/nonlinear-labs-2D.dtb"
+	MMC_CMDS="${MMC_CMDS}; setenv mmcroot /dev/mmcblk0p2 ro"
+	MMC_CMDS="${MMC_CMDS}; setenv mmcrootfstype ext4 rootwait"
+	MMC_CMDS="${MMC_CMDS}; setenv bootargs console=\${console} \${optargs} root=\${mmcroot} rootfstype=\${mmcrootfstype}"
+	MMC_CMDS="${MMC_CMDS}; bootm \${loadaddr} - \${fdtaddr}"
+	echo "${MMC_CMDS}" > ${MOUNT_POINT_BOOT}/uEnv.txt
 }
 
 function set_ssid {
