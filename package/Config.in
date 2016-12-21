@@ -2015,6 +2015,7 @@ source "package/nonlinear/playground/Config.in"
 source "package/nonlinear/espi_driver/Config.in"
 source "package/nonlinear/lpc_bb_driver/Config.in"
 source "package/nonlinear/nonlinear_all/Config.in"
+source "package/nonlinear/nonlinear_dts/Config.in"
 endmenu
 
 menu "Hardware Tests"
