@@ -31,7 +31,8 @@ define HOST_CMAKE_CONFIGURE_CMDS
 		LDFLAGS="$(HOST_LDFLAGS)" \
 		CFLAGS="$(HOST_CMAKE_CFLAGS)" \
 		./bootstrap --prefix=$(HOST_DIR)/usr \
-			--parallel=$(PARALLEL_JOBS) -- \
+			--parallel=$(PARALLEL_JOBS) \
+			--system-curl -- \
 			-DCMAKE_C_FLAGS="$(HOST_CMAKE_CFLAGS)" \
 			-DCMAKE_CXX_FLAGS="$(HOST_CMAKE_CXXFLAGS)" \
 			-DCMAKE_EXE_LINKER_FLAGS="$(HOST_LDFLAGS)" \
