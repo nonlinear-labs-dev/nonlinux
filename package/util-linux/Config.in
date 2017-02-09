@@ -232,6 +232,15 @@ config BR2_PACKAGE_UTIL_LINUX_SETTERM
 	help
 	  Set terminal attributes
 
+config BR2_PACKAGE_UTIL_LINUX_SFDISK
+	bool "sfdisk"
+	help
+	  Partitioning utility sfdisk
+
+comment "sfdisk needs a uClibc or (e)glibc toolchain w/ wchar, locale, dynamic library"
+	depends on !(BR2_ENABLE_LOCALE && BR2_USE_WCHAR) \
+		|| BR2_STATIC_LIBS || BR2_TOOLCHAIN_USES_MUSL
+
 config BR2_PACKAGE_UTIL_LINUX_SWITCH_ROOT
 	bool "switch_root"
 	help
