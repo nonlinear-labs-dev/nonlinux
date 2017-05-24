@@ -235,6 +235,11 @@ while [[ $# -gt 1 ]]; do
 	DEVICE=$1
 done
 
+if [[ "$1" = @(*/sda*) ]]; then
+    printf "Please do not overwrite buildservers root partition!\n"
+    exit 1
+fi
+
 if [ -b "${DEVICE}" ]; then
 	DEVICE_P1=$(get_partition ${DEVICE} 1)
 	DEVICE_P2=$(get_partition ${DEVICE} 2)
