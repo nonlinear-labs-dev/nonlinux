@@ -26,8 +26,6 @@ define NONLINEAR_ALL_BUILD_CMDS
 	$(foreach lib, $(PACKAGES_TO_CARE_FOR), make $(lib)-clean-for-rebuild;)	
 	$(foreach lib, $(PACKAGES_TO_CARE_FOR), make $(lib)-rebuild;)	
 	$(foreach lib, $(PACKAGES_TO_CARE_FOR), make $(lib);)
-	scp output/images/rootfs.tar.gz root@192.168.0.234:/tmp
-	ssh root@192.168.0.234 'gzip -dc /tmp/rootfs.tar.gz | tar -C / -xv'
 endef
 
 define NONLINEAR_ALL_INSTALL_CMDS
