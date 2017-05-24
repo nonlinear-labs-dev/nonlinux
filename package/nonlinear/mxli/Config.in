@@ -1,0 +1,7 @@
+config BR2_PACKAGE_MXLI
+       bool "mxli"
+       help
+         the MXLI tool for flashing LPC via USB
+	 
+	 http://www.nonlinear-labs.de
+
