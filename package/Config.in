@@ -1702,6 +1702,7 @@ endmenu
 
 menu "Nonlinear Labs"
 source "package/nonlinear/playground/Config.in"
+source "package/nonlinear/text2soled/Config.in"
 source "package/nonlinear/espi_driver/Config.in"
 source "package/nonlinear/lpc_bb_driver/Config.in"
 source "package/nonlinear/nonlinear_all/Config.in"

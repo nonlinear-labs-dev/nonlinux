@@ -1,0 +1,7 @@
+config BR2_PACKAGE_TEXT2SOLED
+       bool "text2soled"
+       help
+         the NonlinearLabs tool for showing text on small OLED
+	 
+	 http://www.nonlinear-labs.de
+
