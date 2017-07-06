@@ -22,6 +22,7 @@ fi
 ################################
 # try to checkout requested branch
 cd output/build/playground-HEAD
+git fetch origin $1 > /dev/null 2>&1
 git checkout $1 > /dev/null 2>&1
 
 if [ "$?" -ne "0" ]
@@ -71,10 +72,17 @@ fi
 version=`date +"%Y-%m-%d-%H-%M"`
 targetdir=/nonlinear/playground-$1-$version
 
-scp -r output/target/nonlinear/playground root@$1:$targetdir
-ssh root@$1 "rm /nonlinear/playground"
-ssh root@$1 "mv /nonlinear/playground /nonlinear/playground-old"
-ssh root@$1 "ln -s $targetdir /nonlinear/playground"
-ssh root@$1 "systemctl restart playground"
+# copy all the stuff into a new directory
+scp -r output/target/nonlinear/playground root@192.168.8.2:$targetdir
+
+#if it is a link:
+ssh root@192.168.8.2 "rm /nonlinear/playground" > /dev/null 2>&1
+
+#if it is a directory (fresh sd card):
+ssh root@192.168.8.2 "mv /nonlinear/playground /nonlinear/playground-old" > /dev/null 2>&1
+
+# finalize
+ssh root@192.168.8.2 "ln -s $targetdir /nonlinear/playground"
+ssh root@192.168.8.2 "systemctl restart playground"
 
 
