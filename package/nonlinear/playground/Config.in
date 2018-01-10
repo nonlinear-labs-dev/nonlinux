@@ -1,5 +1,6 @@
 config BR2_PACKAGE_PLAYGROUND
        bool "playground"
+       depends on BR2_PACKAGE_GWT
        help
          the NonlinearLabs playground project
 	 
