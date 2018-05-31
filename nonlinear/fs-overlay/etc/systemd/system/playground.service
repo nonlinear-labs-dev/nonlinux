@@ -4,6 +4,7 @@ After=syslog.target network.target systemd-modules-load.service
 
 [Service]
 ExecStart=/nonlinear/playground/playground
+ExecStop=/nonlinear/scripts/shutDownPlayground.sh
 Restart=on-failure
 RestartSec=1
 
