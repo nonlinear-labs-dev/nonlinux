@@ -1,3 +1,5 @@
-# From http://sourceforge.net/projects/boost/files/boost/1.60.0/
-md5	65a840e1a0b13a558ff19eeb2c4f0cbe	boost_1_60_0.tar.bz2
-sha1	7f56ab507d3258610391b47fef6b11635861175a	boost_1_60_0.tar.bz2
+# From http://www.boost.org/users/history/version_1_66_0.html
+sha256 5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9  boost_1_66_0.tar.bz2
+
+# Locally computed
+sha256 c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566  LICENSE_1_0.txt

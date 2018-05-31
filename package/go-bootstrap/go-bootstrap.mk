@@ -4,11 +4,11 @@
 #
 ################################################################################
 
-GO_BOOTSTRAP_VERSION = 1.4.2
+GO_BOOTSTRAP_VERSION = 1.4.3
 GO_BOOTSTRAP_SITE = https://storage.googleapis.com/golang
 GO_BOOTSTRAP_SOURCE = go$(GO_BOOTSTRAP_VERSION).src.tar.gz
 
-GO_BOOTSTRAP_LICENSE = BSD-3c
+GO_BOOTSTRAP_LICENSE = BSD-3-Clause
 GO_BOOTSTRAP_LICENSE_FILES = LICENSE
 
 # To build programs that need cgo support the toolchain needs to be
@@ -17,13 +17,16 @@ GO_BOOTSTRAP_LICENSE_FILES = LICENSE
 # host-go-bootstrap.
 HOST_GO_BOOTSTRAP_DEPENDENCIES = toolchain
 
-HOST_GO_BOOTSTRAP_ROOT = $(HOST_DIR)/usr/lib/go-$(GO_BOOTSTRAP_VERSION)
+HOST_GO_BOOTSTRAP_ROOT = $(HOST_DIR)/lib/go-$(GO_BOOTSTRAP_VERSION)
 
+# The go build system is not compatable with ccache, so use HOSTCC_NOCCACHE
+# here.  See https://github.com/golang/go/issues/11685.
 HOST_GO_BOOTSTRAP_MAKE_ENV = \
 	GOOS=linux \
 	GOROOT_FINAL="$(HOST_GO_BOOTSTRAP_ROOT)" \
 	GOROOT="$(@D)" \
 	GOBIN="$(@D)/bin" \
+	CC=$(HOSTCC_NOCCACHE) \
 	CGO_ENABLED=0
 
 define HOST_GO_BOOTSTRAP_BUILD_CMDS

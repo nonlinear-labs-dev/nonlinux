@@ -1,4 +1,6 @@
-# From https://www.python.org/downloads/release/python-2711/
-md5	1dbcc848b4cd8399a8199d000f9f823c	Python-2.7.11.tar.xz
+# From https://www.python.org/downloads/release/python-2714/
+md5 1f6db41ad91d9eb0a6f0c769b8613c5b  Python-2.7.14.tar.xz
 # Locally calculated
-sha256	962b4c45af50124ea61f11a30deb4342fc0bc21126790fa1d7f6c79809413f46  Python-2.7.11.tar.xz
+sha256 71ffb26e09e78650e424929b2b457b9c912ac216576e6bd9e7d204ed03296a66  Python-2.7.14.tar.xz
+# License files, locally calculated
+sha256 d2d17b17388da74dc9c6bdbf78eb7237432c3f8a0c87852df740ec99de2ec680  LICENSE

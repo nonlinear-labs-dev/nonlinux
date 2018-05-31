@@ -4,16 +4,14 @@
 #
 ################################################################################
 
-MPG123_VERSION = 1.23.3
+MPG123_VERSION = 1.25.2
 MPG123_SOURCE = mpg123-$(MPG123_VERSION).tar.bz2
 MPG123_SITE = http://downloads.sourceforge.net/project/mpg123/mpg123/$(MPG123_VERSION)
 MPG123_CONF_OPTS = --disable-lfs-alias
 MPG123_INSTALL_STAGING = YES
-MPG123_LICENSE = LGPLv2.1
+MPG123_LICENSE = LGPL-2.1
 MPG123_LICENSE_FILES = COPYING
 MPG123_DEPENDENCIES = host-pkgconf
-# 0001-Makefile.am-don-t-override-LIBS.patch patches Makefile.am
-MPG123_AUTORECONF = YES
 
 MPG123_CPU = $(if $(BR2_SOFT_FLOAT),generic_nofpu,generic_fpu)
 
@@ -76,10 +74,11 @@ endif
 
 MPG123_CONF_OPTS += --with-audio=$(subst $(space),$(comma),$(MPG123_AUDIO))
 
-ifeq ($(BR2_PACKAGE_LIBTOOL),y)
-MPG123_DEPENDENCIES += libtool
-# .la files gets stripped , so directly load .so files rather than .la
-MPG123_CONF_OPTS += --with-modules --with-module-suffix=.so
+# output modules are loaded with dlopen()
+ifeq ($(BR2_STATIC_LIBS),y)
+MPG123_CONF_OPTS += --disable-modules
+else
+MPG123_CONF_OPTS += --enable-modules
 endif
 
 $(eval $(autotools-package))
