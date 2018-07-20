@@ -5,7 +5,7 @@
 ################################################################################
 
 TEXT2SOLED_VERSION = HEAD
-TEXT2SOLED_SITE = git@nonlinear-labs.git.beanstalkapp.com:/nonlinear-labs/text2soled.git
+TEXT2SOLED_SITE = git@github.com:nonlinear-labs-dev/text2soled.git
 TEXT2SOLED_SITE_METHOD = git
 TEXT2SOLED_LICENSE = GPLv3+
 TEXT2SOLED_LICENSE_FILES = COPYING
