@@ -7,7 +7,7 @@
 LPC_BB_DRIVER_MODULE = lpc_bb_driver
 LPC_BB_DRIVER_INSTALL_STAGING = YES
 LPC_BB_DRIVER_VERSION = master
-LPC_BB_DRIVER_SITE = git@nonlinear-labs.git.beanstalkapp.com:/nonlinear-labs/lpc_bb_driver.git
+LPC_BB_DRIVER_SITE = git@github.com:nonlinear-labs-dev/lpc_bb.git
 LPC_BB_DRIVER_SITE_METHOD = git
 LPC_BB_DRIVER_DEPENDENCIES = linux
 LPC_BB_DRIVER_LICENSE = GPLv3+
