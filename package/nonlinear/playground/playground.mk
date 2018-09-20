@@ -5,7 +5,7 @@
 ################################################################################
 
 PLAYGROUND_VERSION = HEAD
-PLAYGROUND_SITE = git@github.com:nonlinear-labs-dev/C15.git
+PLAYGROUND_SITE = https://github.com/nonlinear-labs-dev/C15.git
 PLAYGROUND_SITE_METHOD = git
 PLAYGROUND_LICENSE = GPLv3+
 PLAYGROUND_LICENSE_FILES = COPYING

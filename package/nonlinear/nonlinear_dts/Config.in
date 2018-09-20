@@ -10,7 +10,7 @@ if BR2_PACKAGE_NONLINEAR_DTS
 
 config BR2_PACKAGE_NONLINEAR_DTS_REPOSITORY
         string "git repository that holds the dts files"
-        default "git@nonlinear-labs.git.beanstalkapp.com:/nonlinear-labs/dts.git"
+        default "git@github.com:nonlinear-labs-dev/dts.git"
 
 config BR2_PACKAGE_NONLINEAR_DTS_VERSION
         string "version or branch to check out from the git repository"
