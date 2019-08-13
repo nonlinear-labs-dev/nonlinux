@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-PLAYGROUND_VERSION = HEAD
+PLAYGROUND_VERSION = layouts-release-build-no-audio
 PLAYGROUND_SITE = https://github.com/nonlinear-labs-dev/C15.git
 PLAYGROUND_SITE_METHOD = git
 PLAYGROUND_LICENSE = GPLv3+
