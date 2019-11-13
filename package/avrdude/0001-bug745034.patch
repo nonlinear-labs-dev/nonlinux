@@ -1,5 +1,5 @@
---- output/build/avrdude-eabe067c4527bc2eedc5db9288ef5cf1818ec720/avrdude/original-pindefs.h	2013-10-31 16:06:35.000000000 +0000
-+++ output/build/avrdude-eabe067c4527bc2eedc5db9288ef5cf1818ec720/avrdude/pindefs.h	2019-11-13 13:42:59.419617390 +0000
+--- a/avrdude/original-pindefs.h	2013-10-31 16:06:35.000000000 +0000
++++ b/avrdude/pindefs.h	2019-11-13 13:42:59.419617390 +0000
 @@ -59,7 +59,7 @@
  #define PIN_MIN     0   /* smallest allowed pin number */
  #define PIN_MAX     31  /* largest allowed pin number */
