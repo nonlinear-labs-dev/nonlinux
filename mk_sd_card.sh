@@ -118,10 +118,10 @@ function rewrite_partitions {
 	printf "Creating new partition table...\n"
 	echo -e ',50M,c,*\n,\n' | sudo sfdisk ${DEVICE} 2>/dev/null 1>/dev/null && sync
 
-	printf "Creating Partitions...\n"
+	printf "Creating Partitions... (1/2)\n"
 	mkfs.vfat -n BOOT ${DEVICE_P1} 1>/dev/null 2>/dev/null
+	printf "Creating Partitions... (2/2)\n"
 	mkfs.ext3 ${DEVICE_P2} 1>/dev/null 2>/dev/null
-
 	printf "Rereading partition table...\n"
 	partprobe ${DEVICE} && sync
 }
@@ -234,11 +234,6 @@ while [[ $# -gt 1 ]]; do
 	shift # shift argument
 	DEVICE=$1
 done
-
-if [[ "$1" = @(*/sda*) ]]; then
-    printf "Please do not overwrite buildservers root partition!\n"
-    exit 1
-fi
 
 if [ -b "${DEVICE}" ]; then
 	DEVICE_P1=$(get_partition ${DEVICE} 1)
