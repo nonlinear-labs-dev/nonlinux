@@ -30,5 +30,6 @@ define AVRDUDE_REMOVE_BACKUP_FILE
 endef
 
 AVRDUDE_POST_INSTALL_TARGET_HOOKS += AVRDUDE_REMOVE_BACKUP_FILE
+AVRDUDE_CONF_OPTS=--enable-linuxgpio
 
 $(eval $(autotools-package))
