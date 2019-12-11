@@ -1,7 +1,7 @@
 BR2_arm=y
 BR2_cortex_a8=y
-BR2_DL_DIR="$(HOME)/development/buildroot_assets/dl"
-BR2_HOST_DIR="$(HOME)/development/buildroot_assets/host"
+# BR2_DL_DIR="$(HOME)/development/buildroot_assets/dl"
+# BR2_HOST_DIR="$(HOME)/development/buildroot_assets/host"
 BR2_OPTIMIZE_3=y
 BR2_KERNEL_HEADERS_VERSION=y
 BR2_DEFAULT_KERNEL_VERSION="4.0"
