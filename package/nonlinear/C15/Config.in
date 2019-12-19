@@ -1,0 +1,8 @@
+config BR2_PACKAGE_C15
+       bool "C15"
+       depends on BR2_PACKAGE_GWT
+       help
+         the NonlinearLabs C15 project
+	 
+	 http://www.nonlinear-labs.de
+
