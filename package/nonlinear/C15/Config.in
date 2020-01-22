@@ -1,6 +1,6 @@
 config BR2_PACKAGE_C15
        bool "C15"
-       depends on BR2_PACKAGE_GWT
+       depends on BR2_PACKAGE_BOOST
        help
          the NonlinearLabs C15 project
 	 
