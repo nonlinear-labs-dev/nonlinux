@@ -1,7 +1,0 @@
-config BR2_PACKAGE_GWT
-       bool "GWT compiler"
-       help
-         the Google Web Toolkit
-	 
-	 http://www.gwtproject.org
-

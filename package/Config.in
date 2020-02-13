@@ -1702,20 +1702,10 @@ endmenu
 
 menu "Nonlinear Labs"
 source "package/nonlinear/C15/Config.in"
-source "package/nonlinear/text2soled/Config.in"
 source "package/nonlinear/espi_driver/Config.in"
 source "package/nonlinear/lpc_bb_driver/Config.in"
-source "package/nonlinear/nonlinear_all/Config.in"
 source "package/nonlinear/nonlinear_dts/Config.in"
-source "package/nonlinear/nlimagemaker/Config.in"
 source "package/nonlinear/mxli/Config.in"
-source "package/nonlinear/gwt/Config.in"
 endmenu
-
-menu "Hardware Tests"
-#source "package/nonlinear/hw_tests/scsx/Config.in"
-#source "package/nonlinear/hw_tests/nl_emphase/Config.in"
-endmenu
-
 
 endmenu

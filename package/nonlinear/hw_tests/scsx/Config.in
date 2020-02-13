@@ -1,7 +1,0 @@
-config BR2_PACKAGE_HWTESTS_SCSX
-       bool "scsx"
-       help
-         Hardware test project for SCSX
-	 
-	 http://www.nonlinearlabs.de
-
