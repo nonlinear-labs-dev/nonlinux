@@ -9,7 +9,9 @@ C15_SITE = /sources
 C15_SITE_METHOD = local
 
 define DELETE_ARTIFACTS
-	rsync --delete -avu --chmod=u=rwX,go=rX --exclude .svn --exclude .git --exclude .hg --exclude .bzr --exclude CVS -f 'P buildroot-build/' $(C15_SITE)/ $(@D)
+    rsync --delete -avu --chmod=u=rwX,go=rX --exclude .svn --exclude .git --exclude .hg --exclude .bzr --exclude CVS -f 'P buildroot-build/' $(C15_SITE)/ $(@D)
+    rm -rf $(@D)/projects/NonMaps/target
+    rm -rf $(@D)/projects/parameter-db/src/.~*
 endef
 
 C15_POST_RSYNC_HOOKS += DELETE_ARTIFACTS
