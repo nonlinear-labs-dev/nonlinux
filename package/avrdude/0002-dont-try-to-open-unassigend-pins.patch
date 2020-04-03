@@ -1,0 +1,13 @@
+--- a/avrdude/linuxgpio.c	2013-10-31 17:06:35.000000000 +0100
++++ a/avrdude/linuxgpio.c	2020-04-03 15:12:12.265897820 +0200
+@@ -263,6 +263,10 @@
+          i == PIN_AVR_SCK   ||
+          i == PIN_AVR_MOSI  ||
+          i == PIN_AVR_MISO ) {
++
++      if(pgm->pinno[i] == (1 << 31))
++	continue;
++      
+         pin = pgm->pinno[i] & PIN_MASK;
+         if ((r=linuxgpio_export(pin)) < 0) {
+             fprintf(stderr, "Can't export GPIO %d, already exported/busy?: %s",
