@@ -1,0 +1,6 @@
+config BR2_PACKAGE_BBBRTC
+       bool "bbbrtc"
+       help
+         power cycle the BBB - https://github.com/bigjosh/bbbrtc
+	 
+	 http://www.nonlinear-labs.de

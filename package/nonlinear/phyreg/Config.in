@@ -1,0 +1,6 @@
+config BR2_PACKAGE_PHYREG
+       bool "phyreg"
+       help
+         check PHY register if Ethernet is dead or alive - https://github.com/bigjosh/phyreg
+	 
+	 http://www.nonlinear-labs.de
