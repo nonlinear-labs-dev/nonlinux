@@ -13,6 +13,7 @@ PHYREG_INSTALL_TARGET = YES
 
 define PHYREG_BUILD_CMDS
      DESTDIR=$(TARGET_DIR) $(MAKE) -C $(@D) install
+     CC=$(TARGET_CC)
 endef
 
 $(eval $(generic-package))
