@@ -12,7 +12,7 @@ BBBRTC_LICENSE_FILES = COPYING
 BBBRTC_INSTALL_TARGET = YES
 
 define BBBRTC_BUILD_CMDS
-     DESTDIR=$(TARGET_DIR) $(MAKE) -C $(@D) all
+     CXX=$(TARGET_CC) DESTDIR=$(TARGET_DIR) $(MAKE) -C $(@D) all
 endef
 
 $(eval $(generic-package))
