@@ -1,0 +1,7 @@
+config BR2_PACKAGE_PLAYCONTROLLER_DRIVER
+       bool "playcontroller_driver"
+       depends on BR2_LINUX_KERNEL
+       help
+         NonlinearLabs kernel module for communication with playcontroller
+	 
+	 http://www.nonlinearlabs.de

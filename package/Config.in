@@ -1703,7 +1703,7 @@ endmenu
 menu "Nonlinear Labs"
 source "package/nonlinear/C15/Config.in"
 source "package/nonlinear/espi_driver/Config.in"
-source "package/nonlinear/lpc_bb_driver/Config.in"
+source "package/nonlinear/playcontroller_driver/Config.in"
 source "package/nonlinear/nonlinear_dts/Config.in"
 source "package/nonlinear/mxli/Config.in"
 source "package/nonlinear/bbbrtc/Config.in"

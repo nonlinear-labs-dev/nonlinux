@@ -7,7 +7,7 @@
 ESPI_DRIVER_MODULE = espi_driver
 ESPI_DRIVER_INSTALL_STAGING = YES
 ESPI_DRIVER_VERSION = master
-ESPI_DRIVER_SITE = /sources/projects/bbb-espi-driver
+ESPI_DRIVER_SITE = /sources/projects/bbb/espi-driver
 ESPI_DRIVER_SITE_METHOD = local
 ESPI_DRIVER_DEPENDENCIES = linux
 ESPI_DRIVER_LICENSE = GPLv3+
