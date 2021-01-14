@@ -24,3 +24,15 @@ You can also find us on #buildroot on Freenode IRC.
 
 If you would like to contribute patches, please read
 https://buildroot.org/manual.html#submitting-patches
+
+How to create a rescue USB-Stick - Carefull not to wipe your SSD!!!
+1) Format a USB stick with 'mkfs.vfat -F 32 -n "NLL_RESCUE" /dev/sdX'
+   You can also perform 'wipefs --all /dev/sdB' to remove other file systems beforehand 
+2) in your build directory run 'make bbb-console'
+3) Edit 'nano /fs/nonlinux/nonlinear/fs-overlay-usbrescue/usr/bin/setup.sh' to peform the rescue steps
+4) Execute 'make nonlinear_usbrescue_defconfig' and run 'make'
+5) Copy you image to you formatted USB with 'cp /tmp/nonlinear.img /mnt/' if you mounted to /mnt. 
+   Don't forget to mount, No 'dd' needed.
+
+This is not the final solution, but it works. Next step is to automate the steps with cmake.
+USB formating and image deployment should probably be done outside of docker.

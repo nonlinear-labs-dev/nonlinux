@@ -49,7 +49,7 @@ mount_stick() {
 
                 if (lsblk | grep sda); then
                         echo "Found /dev/sda1. Mounting to /media"
-                        mount /dev/sda1 /media
+                        mount /dev/sda1 /media || mount /dev/sda /media
                         mounted=true;
                 else
                         echo "Waiting for /dev/sda1 to appear..."
@@ -59,6 +59,7 @@ mount_stick() {
 }
 
 mount_stick
+echo "this is a test!" >> /media/message.txt
 exit
 
 
