@@ -31,6 +31,7 @@ How to create a rescue USB-Stick - Carefull not to wipe your SSD!!!
 2) in your build directory run 'make bbb-console'
 3) Edit 'nano /fs/nonlinux/nonlinear/fs-overlay-usbrescue/usr/bin/setup.sh' to peform the rescue steps
 4) Execute 'make nonlinear_usbrescue_defconfig' and run 'make'
+6) run './create_usb_stick.sh' which will create 'nonlinear.img' under /tmp
 5) Copy you image to you formatted USB with 'cp /tmp/nonlinear.img /mnt/' if you mounted to /mnt. 
    Don't forget to mount, No 'dd' needed.
 
