@@ -33,7 +33,7 @@ How to create a rescue USB-Stick - Carefull not to wipe your SSD!!!
 4) Execute 'make nonlinear_usbrescue_defconfig' and run 'make'
 6) run './create_usb_stick.sh' which will create 'nonlinear.img' under /tmp
 5) Copy you image to you formatted USB with 'cp /tmp/nonlinear.img /mnt/' if you mounted to /mnt. 
-   Don't forget to mount, No 'dd' needed.
+   (Docker will not mount you device autmatically. No 'dd' needed t copy.)
 
 This is not the final solution, but it works. Next step is to automate the steps with cmake.
 USB formating and image deployment should probably be done outside of docker.
