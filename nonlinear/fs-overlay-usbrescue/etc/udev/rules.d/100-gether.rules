@@ -1,0 +1,1 @@
+SUBSYSTEM=="usb", ATTR{idVendor}=="1d6b", ATTR{idProduct}=="0002", ACTION=="add", RUN+="/bin/systemctl start usbnet.service"
