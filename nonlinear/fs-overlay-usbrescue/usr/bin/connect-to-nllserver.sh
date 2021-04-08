@@ -23,8 +23,8 @@ mount_stick() {
 
 connect_with_network() {
 	[ ! -e /media/access.txt ] && { echo "Access file missing!"; return 1; }
-	SSID=$(cat /media/access.txt | grep SSID sed 's/.*://')
-	PWD=$(cat /media/access.txt | grep PASSWORD sed 's/.*://')
+	SSID=$(cat /media/access.txt | grep SSID | sed 's/.*://')
+	PWD=$(cat /media/access.txt | grep PASSWORD | sed 's/.*://')
 
 	if ( ! systemctl status NetworkManager ); then
 		echo "Network Manager dead!"

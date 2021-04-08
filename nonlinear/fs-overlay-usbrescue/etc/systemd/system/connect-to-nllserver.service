@@ -1,6 +1,6 @@
 [Unit]
-Description=Runs the script to ceonnect to NLL server for maintenance purposes
-After=NetworkManager.service
+Description=Runs the script to connect to NLL server for maintenance purposes
+After=network.target NetworkManager.service
 
 [Service]
 ExecStart=/usr/bin/connect-to-nllserver.sh
