@@ -19,6 +19,7 @@ mount_stick() {
                         sleep 1
                 fi
         done
+	return 0
 }
 
 connect_with_network() {
@@ -28,8 +29,17 @@ connect_with_network() {
 
 	if ( ! systemctl status NetworkManager ); then
 		echo "Network Manager dead!"
-		return 1 
+		return 1
 	fi
+
+	TIMEOUT=5
+	for COUNTER in $(seq 1 $TIMEOUT); do
+	        if ( ! nmcli device status | grep wifi ); then
+          	  	echo "Wifi device not up!"
+			return 1
+        	fi
+        	sleep 1
+    	done
 
 	if ( ! nmcli device wifi list | grep $SSID ); then
 		echo "Sepcified network missing!"
