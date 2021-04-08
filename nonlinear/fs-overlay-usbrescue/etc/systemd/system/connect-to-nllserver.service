@@ -1,0 +1,9 @@
+[Unit]
+Description=Runs the script to ceonnect to NLL server for maintenance purposes
+After=NetworkManager.service
+
+[Service]
+ExecStart=/usr/bin/connect-to-nllserver.sh
+
+[Install]
+WantedBy=multi-user.target
