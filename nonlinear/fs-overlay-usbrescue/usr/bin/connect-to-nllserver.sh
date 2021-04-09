@@ -14,6 +14,8 @@ mount_stick () {
             echo "Found /dev/sda1. Mounting to /media"
             mount /dev/sda1 /media || mount /dev/sda /media
             mounted=true
+            rm $LOG_FILE
+            touch $LOG_FILE
         fi
         echo "Waiting for /dev/sda to appear..."
         sleep 1
@@ -50,7 +52,7 @@ connect_with_network () {
 }
 
 connect_to_server () {
-    sshpass -p 'cBe18530-' ssh -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de ||
+    sshpass -p 'cBe18530-' ssh -NT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de ||
         { echo "Cannot conect to NLL server!" > $LOG_FILE; return 1; }
     return 0
 }
