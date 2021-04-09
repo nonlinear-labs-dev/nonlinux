@@ -61,7 +61,7 @@ connect_to_server () {
         sleep 1
     done
 
-    sshpass -p 'cBe18530-' ssh -vvNT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de ||
+    sshpass -p 'cBe18530-' ssh -vvNT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de >$LOG_FILE 2>&1 ||
         { echo "Cannot connect to NLL server!" > $LOG_FILE; return 1; }
     return 0
 }
