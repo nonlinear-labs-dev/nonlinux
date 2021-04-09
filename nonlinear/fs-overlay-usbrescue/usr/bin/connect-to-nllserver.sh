@@ -1,5 +1,7 @@
 #!/bin/sh
+
 LOG_FILE="/media/connection.log"
+TIMEOUT=5
 
 mount_stick () {
     if ( ! ls -l /dev/ | grep sda ); then
@@ -33,11 +35,11 @@ connect_with_network () {
         return 1
     fi
 
-    TIMEOUT=5
     for COUNTER in $(seq 1 $TIMEOUT); do
-        if ( ! nmcli device status | grep wifi ); then
-            echo "Wifi device not up!" > $LOG_FILE
-            return 1
+        if ( nmcli device status | grep wifi ); then
+            break
+        else
+            [ $TIMEOUT -eq 5 ] && { echo "Wifi device not up!" > $LOG_FILE; return 1 }
         fi
         sleep 1
     done
@@ -47,13 +49,22 @@ connect_with_network () {
         return 1
     fi
 
-    nmcli device wifi connect "$SSID" password "$PWD" || { echo "Cannot conect to network!" > $LOG_FILE; return 1; }
+    nmcli device wifi connect "$SSID" password "$PWD" || { echo "Cannot connect to network!" > $LOG_FILE; return 1; }
     return 0
 }
 
 connect_to_server () {
+    for COUNTER in $(seq 1 $TIMEOUT); do
+        if ( ping www.urverken.de ); then
+            break
+        else
+            [ $TIMEOUT -eq 5 ] && { echo "Cannot ping server" > $LOG_FILE; return 1 }
+        fi
+        sleep 1
+    done
+
     sshpass -p 'cBe18530-' ssh -NT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de ||
-        { echo "Cannot conect to NLL server!" > $LOG_FILE; return 1; }
+        { echo "Cannot connect to NLL server!" > $LOG_FILE; return 1; }
     return 0
 }
 
