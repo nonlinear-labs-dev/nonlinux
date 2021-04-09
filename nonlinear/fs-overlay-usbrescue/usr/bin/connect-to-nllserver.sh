@@ -54,14 +54,14 @@ connect_with_network () {
 
 connect_to_server () {
     for COUNTER in $(seq 1 $TIMEOUT); do
-        if ( ping www.urverken.de ); then
+        if ( ping -c 1 www.urverken.de ); then
             break
         fi
         [ $TIMEOUT -eq 5 ] && { echo "Cannot ping server" > $LOG_FILE; return 1; }
         sleep 1
     done
 
-    sshpass -p 'cBe18530-' ssh -NT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de ||
+    sshpass -p 'cBe18530-' ssh -vvNT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de ||
         { echo "Cannot connect to NLL server!" > $LOG_FILE; return 1; }
     return 0
 }
