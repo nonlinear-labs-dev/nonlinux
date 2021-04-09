@@ -61,7 +61,6 @@ main () {
     mount_stick || return 1
     connect_with_network || return 1
     connect_to_server || return 1
-    echo "Connected to server!" > $LOG_FILE
     return 0
 }
 
