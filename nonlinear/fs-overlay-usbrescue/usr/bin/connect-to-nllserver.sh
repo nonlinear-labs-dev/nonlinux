@@ -38,9 +38,8 @@ connect_with_network () {
     for COUNTER in $(seq 1 $TIMEOUT); do
         if ( nmcli device status | grep wifi ); then
             break
-        else
-            [ $TIMEOUT -eq 5 ] && { echo "Wifi device not up!" > $LOG_FILE; return 1 }
         fi
+        [ $TIMEOUT -eq 5 ] && { echo "Wifi device not up!" > $LOG_FILE; return 1; }
         sleep 1
     done
 
@@ -57,9 +56,8 @@ connect_to_server () {
     for COUNTER in $(seq 1 $TIMEOUT); do
         if ( ping www.urverken.de ); then
             break
-        else
-            [ $TIMEOUT -eq 5 ] && { echo "Cannot ping server" > $LOG_FILE; return 1 }
         fi
+        [ $TIMEOUT -eq 5 ] && { echo "Cannot ping server" > $LOG_FILE; return 1; }
         sleep 1
     done
 
