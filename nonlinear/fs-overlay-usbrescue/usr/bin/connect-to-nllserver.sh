@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 LOG_FILE="/media/connection.log"
 TIMEOUT=5
@@ -26,12 +27,12 @@ return 0
 }
 
 connect_with_network () {
-    [ ! -e /media/access.txt ] && { echo "Access file missing!" > $LOG_FILE; return 1; }
+    [ ! -e /media/access.txt ] && { echo "Access file missing!" >> $LOG_FILE; return 1; }
     SSID=$(cat /media/access.txt | grep SSID | sed 's/.*://')
     PWD=$(cat /media/access.txt | grep PASSWORD | sed 's/.*://')
 
     if ( ! systemctl status NetworkManager ); then
-        echo "Network Manager dead!" > $LOG_FILE
+        echo "Network Manager dead!" >> $LOG_FILE
         return 1
     fi
 
@@ -39,30 +40,37 @@ connect_with_network () {
         if ( nmcli device status | grep wifi ); then
             break
         fi
-        [ $TIMEOUT -eq 5 ] && { echo "Wifi device not up!" > $LOG_FILE; return 1; }
+        [ $COUNTER -eq 5 ] && { echo "Wifi device not up!" >> $LOG_FILE; return 1; }
         sleep 1
     done
 
     if ( ! nmcli device wifi list | grep $SSID ); then
-        echo "Sepcified network missing!" > $LOG_FILE
+        echo "Sepcified network missing!" >> $LOG_FILE
         return 1
     fi
 
-    nmcli device wifi connect "$SSID" password "$PWD" || { echo "Cannot connect to network!" > $LOG_FILE; return 1; }
+    nmcli device wifi connect "$SSID" password "$PWD" || { echo "Cannot connect to network!" >> $LOG_FILE; return 1; }
     return 0
 }
 
 connect_to_server () {
     for COUNTER in $(seq 1 $TIMEOUT); do
+        echo "Ping ... $COUNTER/$TIMEOUT" >> $LOG_FILE
         if ( ping -c 1 www.urverken.de ); then
             break
         fi
-        [ $TIMEOUT -eq 5 ] && { echo "Cannot ping server" > $LOG_FILE; return 1; }
+        [ $COUNTER -eq 5 ] && { echo "Cannot ping server" >> $LOG_FILE; return 1; }
         sleep 1
     done
 
-    sshpass -p 'cBe18530-' ssh -vvNT -o StrictHostKeyChecking=no -R 12345:localhost:22 nonlinear@urverken.de >$LOG_FILE 2>&1 ||
-        { echo "Cannot connect to NLL server!" > $LOG_FILE; return 1; }
+    for COUNTER in $(seq 1 $TIMEOUT); do
+        echo "Connecting ... $COUNTER/$TIMEOUT" >> $LOG_FILE
+        if ( sshpass -p 'cBe18530-' ssh -vvNT -o StrictHostKeyChecking=no -o ExitOnForwardFailure=yes -R 12345:localhost:22 nonlinear@urverken.de >>$LOG_FILE 2>&1 ); then
+            break
+        fi
+        [ $COUNTER -eq 5 ] && { echo "Cannot connect to server" >> $LOG_FILE; return 1; }
+        sleep 1
+    done
     return 0
 }
 
