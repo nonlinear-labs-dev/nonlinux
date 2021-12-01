@@ -1,0 +1,10 @@
+[Unit]
+Description=Restores the C15 OS depending on the update.tar on the USB
+After=network.target
+Wants=network.target 
+
+[Service]
+ExecStart=/usr/bin/restore-c15-os.sh
+
+[Install]
+WantedBy=multi-user.target
