@@ -29,7 +29,22 @@ report() {
     printf "$2" >> LOG_FILE
 }
 
+mount_stick () {
+    USB_DEVICE=""
+    for d in "/dev/sda" "/dev/sda1"; do
+        [ -e ${d} ] && USB_DEVICE=${d}
+    done
 
+    if ( ! mount | grep ${USB_DEVICE} ); then
+        mount ${USB_DEVICE} /media
+        sleep 2
+        report "" "Hello from rescue USB!"
+        rm $LOG_FILE
+        touch $LOG_FILE
+    fi
+
+    return 0
+}
 
 check_preconditions (){
     [ -e /media/nonlinear-c15-update.tar ] || { report "" "Update missing!"; return 1; }
@@ -67,6 +82,7 @@ sync_rootfs (){
 }
 
 main (){
+    mount_stick
     check_update_presence || return 1
     unpack_update || return 1
     mount_rootfs || return 1
