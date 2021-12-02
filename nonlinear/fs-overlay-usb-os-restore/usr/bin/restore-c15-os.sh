@@ -66,8 +66,9 @@ mount_rootfs (){
 }
 
 unpack_update (){
-    rm -r ${BBB_ROOTFS_UPDATE_DIR}/* \
-    && cp /media/nonlinear-c15-update.tar ${BBB_ROOTFS_UPDATE_DIR} \
+    rm -r ${BBB_ROOTFS_UPDATE_DIR}/*
+
+    cp /media/nonlinear-c15-update.tar ${BBB_ROOTFS_UPDATE_DIR} \
     && cd ${BBB_ROOTFS_UPDATE_DIR} \
     && tar xf nonlinear-c15-update.tar \
     || { report "" "Could not unpack update"; return 1; }
