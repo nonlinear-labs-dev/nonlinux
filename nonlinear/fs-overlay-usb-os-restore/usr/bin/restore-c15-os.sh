@@ -10,7 +10,7 @@
 
 set -x
 
-LOG_FILE="/media/error.log"
+LOG_FILE="/media/restore-os.log"
 TIMEOUT=5
 BBB_DEVICE="/dev/mmcblk0p2"
 BBB_ROOTFS_MOUNTPOINT="/tmp/bbb_rootfs"
@@ -23,6 +23,11 @@ freeze() {
     while true; do
         sleep 1
     done
+}
+
+executeAsRoot() {
+    echo "sscl" | /media/utilities/sshpass -p 'sscl' ssh -o ServerAliveInterval=1 -o ConnectionAttempts=1 -o ConnectTimeout=1 -o StrictHostKeyChecking=no sscl@$192.168.10.10 "sudo -S /bin/bash -c '$1'"
+    return $?
 }
 
 t2s() {
@@ -73,6 +78,12 @@ check_preconditions (){
 
     report "$MSG_CHECK" "$MSG_DONE"
     sleep 2
+    return 0
+}
+
+stop_services() {
+    systemctl stop playground > /dev/null || executeAsRoot "systemctl stop playground"
+    systemctl stop bbbb > /dev/null
     return 0
 }
 
@@ -127,6 +138,7 @@ sync_rootfs (){
 main (){
     mount_stick
     check_preconditions || return 1
+    stop_services
     mount_rootfs || return 1
     unpack_update || return 1
     sync_rootfs || return 1
