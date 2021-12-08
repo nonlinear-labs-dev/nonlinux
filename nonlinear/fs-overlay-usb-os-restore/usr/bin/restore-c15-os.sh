@@ -1,8 +1,7 @@
 #!/bin/sh
 # ToDos:
-# - OLED massages
 # - How do we sync the LPC and the ePC?? Focus on BBB rootfs for now ...
-# - mutliple partition check? assume mmcblk0p2
+# - mutliple partition check? assume mmcblk0p2 for now
 
 set -x
 
@@ -11,6 +10,12 @@ TIMEOUT=5
 BBB_DEVICE="/dev/mmcblk0p2"
 BBB_ROOTFS_MOUNTPOINT="/tmp/bbb_rootfs"
 BBB_ROOTFS_UPDATE_DIR="${BBB_ROOTFS_MOUNTPOINT}/update"
+
+freeze() {
+    while true; do
+        sleep 1
+    done
+}
 
 t2s() {
     /media/utilities/text2soled multitext "$1" "$2" "$3" "$4" "$5" "$6"
@@ -41,7 +46,8 @@ mount_stick () {
     if ( ! mount | grep ${USB_DEVICE} ); then
         mount ${USB_DEVICE} /media
         sleep 2
-        report "" "Hello from rescue USB!"
+        report "" "Hello from rescue USB!" "Will start restoring OS shortly ..."
+        sleep 5
         rm $LOG_FILE
         touch $LOG_FILE
     fi
@@ -50,22 +56,32 @@ mount_stick () {
 }
 
 check_preconditions (){
+    report "" "Checking presocondtions ..."
+    sleep 2
     [ -e /media/nonlinear-c15-update.tar ] || { report "" "Update missing!"; return 1; }
     [ -d /media/utilities ] || { report "" "Utilities directory missing!"; return 1; }
 
+    report "" "Checking presocondtions done!"
+    sleep 2
     return 0
 }
 
 mount_rootfs (){
+    report "" "Mounting local partitions ..."
+    sleep 2
     if ( ! mount | grep ${BBB_DEVICE} ); then
         mkdir ${BBB_ROOTFS_MOUNTPOINT} \
         && mount ${BBB_DEVICE} ${BBB_ROOTFS_MOUNTPOINT} \
         || { report "" "Could not mount local rootfs"; return 1; }
     fi
+    report "" "Mounting local partitions done!"
+    sleep 2
     return 0
 }
 
 unpack_update (){
+    report "" "Unpacking restore files ..."
+    sleep 2
     rm -r ${BBB_ROOTFS_UPDATE_DIR}/*
 
     cp /media/nonlinear-c15-update.tar ${BBB_ROOTFS_UPDATE_DIR} \
@@ -77,14 +93,21 @@ unpack_update (){
     && gzip -dc ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs.tar.gz | tar -C ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs -xf - \
     || { report "" "Could not unpack rootfs"; return 1; }
 
+    report "" "Unpacking restore files done!"
+    sleep 2
     return 0
 }
 
-
-
 sync_rootfs (){
+    report "" "Restoring OS ..."
+    sleep 2
+
     LD_LIBRARY_PATH=/media/utilities /media/utilities/rsync -cax --exclude '${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf' --exclude '${BBB_ROOTFS_MOUNTPOINT}/update' ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs ${BBB_ROOTFS_MOUNTPOINT} \
     || { report "" "Faled to sync new rootfs"; return 1; }
+
+    report "" "Restoring OS done!"
+    sleep 2
+
     return 0
 }
 
@@ -94,6 +117,7 @@ main (){
     mount_rootfs || return 1
     unpack_update || return 1
 #    sync_rootfs || return 1
+    report "" "Please, run a full update from USB" "with a valid nonlinear-c15-update.tar" && freeze
     return 0
 }
 
