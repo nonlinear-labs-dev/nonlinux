@@ -26,12 +26,12 @@ freeze() {
 }
 
 executeAsRoot() {
-    echo "sscl" | /media/utilities/sshpass -p 'sscl' ssh -o ServerAliveInterval=1 -o ConnectionAttempts=1 -o ConnectTimeout=1 -o StrictHostKeyChecking=no sscl@$192.168.10.10 "sudo -S /bin/bash -c '$1'"
+    echo "sscl" | sshpass -p 'sscl' ssh -o ServerAliveInterval=1 -o ConnectionAttempts=1 -o ConnectTimeout=1 -o StrictHostKeyChecking=no sscl@$192.168.10.10 "sudo -S /bin/bash -c '$1'"
     return $?
 }
 
 t2s() {
-    /media/utilities/text2soled multitext "$1" "$2" "$3" "$4" "$5" "$6"
+    /usr/C15/text2soled/text2soled multitext "$1" "$2" "$3" "$4" "$5" "$6"
 }
 
 pretty() {
@@ -77,7 +77,6 @@ check_preconditions (){
     report "$MSG_CHECK"
     sleep 2
     [ -e /media/nonlinear-c15-update.tar ] || { report "$MSG_FAILED" "Update.tar missing!"; return 1; }
-    [ -d /media/utilities ] || { report "$MSG_FAILED" "Utilities directory missing!"; return 1; }
 
     report "$MSG_CHECK" "$MSG_DONE"
     sleep 2
@@ -123,7 +122,7 @@ sync_rootfs (){
     report "$MSG_RESTORE"
     sleep 2
 
-    LD_LIBRARY_PATH=/media/utilities /media/utilities/rsync -cax --exclude '${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf' --exclude '${BBB_ROOTFS_MOUNTPOINT}/update' ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs ${BBB_ROOTFS_MOUNTPOINT} \
+    rsync -cax --exclude '${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf' --exclude '${BBB_ROOTFS_MOUNTPOINT}/update' ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs ${BBB_ROOTFS_MOUNTPOINT} \
     || { report "$MSG_FAILED" "$MSG_RESTORE"; return 1; }
 
     report "$MSG_RESTORE" "$MSG_DONE"
@@ -133,10 +132,10 @@ sync_rootfs (){
 }
 
 main (){
-    report "Hello from rescue USB!" "Will start restoring OS shortly ..."
-    stop_services
     mount_stick
-    sleep 2
+    stop_services
+    report "Hello from rescue USB!" "Will start restoring OS shortly ..."
+    sleep 3
     check_preconditions || return 1
     mount_rootfs || return 1
     unpack_update || return 1
