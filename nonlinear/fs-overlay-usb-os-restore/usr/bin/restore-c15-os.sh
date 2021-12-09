@@ -122,7 +122,7 @@ sync_rootfs (){
     report "$MSG_RESTORE"
     sleep 2
 
-    rsync -cax --exclude '${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf' --exclude '${BBB_ROOTFS_MOUNTPOINT}/update' ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs ${BBB_ROOTFS_MOUNTPOINT} \
+    rsync -cax --exclude '${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf' --exclude '${BBB_ROOTFS_UPDATE_DIR}' --delete ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs/ ${BBB_ROOTFS_MOUNTPOINT} \
     || { report "$MSG_FAILED" "$MSG_RESTORE"; return 1; }
 
     report "$MSG_RESTORE" "$MSG_DONE"
