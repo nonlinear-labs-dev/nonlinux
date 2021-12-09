@@ -51,6 +51,12 @@ report() {
     printf "$1 $2 $3\n" >> ${LOG_FILE}
 }
 
+stop_services() {
+    systemctl stop playground > /dev/null || executeAsRoot "systemctl stop playground"
+    systemctl stop bbbb > /dev/null
+    return 0
+}
+
 mount_stick () {
     USB_DEVICE=
     for d in "/dev/sda" "/dev/sda1"; do
@@ -59,9 +65,6 @@ mount_stick () {
 
     if ( ! mount | grep ${USB_DEVICE} ); then
         mount ${USB_DEVICE} /media
-        sleep 2
-        report "Hello from rescue USB!" "Will start restoring OS shortly ..."
-        sleep 5
         rm $LOG_FILE
         touch $LOG_FILE
     fi
@@ -78,12 +81,6 @@ check_preconditions (){
 
     report "$MSG_CHECK" "$MSG_DONE"
     sleep 2
-    return 0
-}
-
-stop_services() {
-    systemctl stop playground > /dev/null || executeAsRoot "systemctl stop playground"
-    systemctl stop bbbb > /dev/null
     return 0
 }
 
@@ -136,9 +133,11 @@ sync_rootfs (){
 }
 
 main (){
-    mount_stick
-    check_preconditions || return 1
+    report "Hello from rescue USB!" "Will start restoring OS shortly ..."
     stop_services
+    mount_stick
+    sleep 2
+    check_preconditions || return 1
     mount_rootfs || return 1
     unpack_update || return 1
     sync_rootfs || return 1
