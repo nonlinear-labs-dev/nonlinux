@@ -101,7 +101,8 @@ unpack_update (){
     MSG_UNPACK="Unpacking files ..."
     report "$MSG_UNPACK"
     sleep 2
-    rm -r ${BBB_ROOTFS_UPDATE_DIR}/*
+    rm -r ${BBB_ROOTFS_UPDATE_DIR}
+    mkdir ${BBB_ROOTFS_UPDATE_DIR}
 
     cp /media/nonlinear-c15-update.tar ${BBB_ROOTFS_UPDATE_DIR} \
     && cd ${BBB_ROOTFS_UPDATE_DIR} \
@@ -122,7 +123,7 @@ sync_rootfs (){
     report "$MSG_RESTORE"
     sleep 2
 
-    rsync -cax --exclude '${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf' --exclude '${BBB_ROOTFS_UPDATE_DIR}' --delete ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs/ ${BBB_ROOTFS_MOUNTPOINT} \
+    rsync -cax --exclude=${BBB_ROOTFS_MOUNTPOINT}/etc/hostapd.conf --exclude=${BBB_ROOTFS_UPDATE_DIR} --delete-after ${BBB_ROOTFS_UPDATE_DIR}/BBB/rootfs/ ${BBB_ROOTFS_MOUNTPOINT} \
     || { report "$MSG_FAILED" "$MSG_RESTORE"; return 1; }
 
     report "$MSG_RESTORE" "$MSG_DONE"
