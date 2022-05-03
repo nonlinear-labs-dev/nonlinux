@@ -1,0 +1,10 @@
+[Unit]
+Description=DHCP Server for usbnet
+After=syslog.target network.target
+
+[Service]
+ExecStartPre=/bin/touch /tmp/dhcpd-usbnet.leases
+ExecStart=/usr/sbin/dhcpd -d -q -cf /etc/dhcpd-usbnet.conf -lf /tmp/dhcpd-usbnet.leases -pf /tmp/usbnet.pid usb0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=DHCP Server for wlan
+After=syslog.target network.target
+
+[Service]
+ExecStartPre=/bin/touch /tmp/dhcpd-wlan.leases
+ExecStart=/usr/sbin/dhcpd -d -q -cf /etc/dhcpd-wlan.conf -lf /tmp/dhcpd-wlan.leases -pf /tmp/wlan.pid wlan0
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
